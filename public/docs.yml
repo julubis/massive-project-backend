@@ -1,0 +1,48 @@
+openapi: '3.0.2'
+info:
+  title: REST API
+  version: '1.0'
+servers:
+  - description: Production
+    url: https://prw8fl-5000.csb.app/api
+  - description: Development
+    url: http://localhost:5000/api
+paths:
+  /foods:
+    get:
+      summary: Get food nutrient per 100 gr
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Limit 
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Limit query 
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+
