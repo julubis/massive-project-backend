@@ -1,8 +1,8 @@
-import express from 'express';
-import getAllFood from '../controllers/food.js';
+const express = require('express');
+const getAllFood = require('../controllers/food');
 
 const router = express.Router();
 
 router.get('/foods', getAllFood);
 
-export default router;
+module.exports = router;

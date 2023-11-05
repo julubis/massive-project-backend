@@ -1,38 +1,38 @@
-import { DataTypes } from "sequelize"
-import db from "../config/database.js"
+const { DataTypes } = require('sequelize');
+const db = require('../config/database');
 
 const Food = db.define('Food', {
   name: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: false,
   },
   category: {
     type: DataTypes.STRING(25),
-    allowNull: false
+    allowNull: false,
   },
   type: {
     type: DataTypes.STRING(6),
-    allowNull: false
+    allowNull: false,
   },
   energy: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   protein: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
   fat: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
   carbs: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
 }, {
   tableName: 'food',
   timestamps: false,
-})
+});
 
-export default Food
+module.exports = Food;
