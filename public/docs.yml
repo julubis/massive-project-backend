@@ -1,7 +1,7 @@
 openapi: '3.0.2'
 info:
-  title: Fitlife RESTful API
-  description: OpenAPI for Fitlife RESTful API
+  title: GoFitLife RESTful API
+  description: OpenAPI for GoFitLife RESTful API
   version: '1.0'
   contact:
     name: Julkarnain
