@@ -36,7 +36,7 @@ const getNews = async (req, res) => {
   return res.json({
     status: 'success',
     data: {
-      news: newsFilter.slice((value.page - 1) * value.pageSize, value.pageSize),
+      news: newsFilter.slice((value.page - 1) * value.pageSize, value.pageSize * value.page),
       total: newsFilter.length,
       page: value.page,
       totalPage: Math.ceil(newsFilter.length / value.pageSize),
