@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/database');
 
-const Food = db.define('Food', {
+const Food = db.define('food', {
   name: {
     type: DataTypes.STRING(100),
     allowNull: false,
@@ -15,7 +15,7 @@ const Food = db.define('Food', {
     allowNull: false,
   },
   energy: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.SMALLINT,
     allowNull: false,
   },
   protein: {
@@ -31,7 +31,6 @@ const Food = db.define('Food', {
     allowNull: false,
   },
 }, {
-  tableName: 'food',
   timestamps: false,
 });
 

@@ -2,7 +2,7 @@ const {
   Op, col, fn, where,
 } = require('sequelize');
 const Joi = require('joi');
-const Food = require('../models/food');
+const Food = require('../models/food.model');
 
 const getAllFood = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getAllFood = async (req, res) => {
       pageSize: Joi.number().integer().min(1).default(10),
     });
     const { value, error } = schema.validate(req.query);
-    if (error) return res.status(400).json({ code: 400, data: null, error: error.message });
+    if (error) return res.status(400).json({ status: 'error', data: null, message: error.message });
 
     const query = {
       limit: value.pageSize,
@@ -35,21 +35,20 @@ const getAllFood = async (req, res) => {
 
     const { rows, count } = await Food.findAndCountAll(query);
 
-    if (count === 0) return res.status(404).json({ code: 404, data: null, error: 'food not found' });
+    if (count === 0) return res.status(404).json({ status: 'error', data: null, message: 'food not found' });
 
     return res.json({
-      code: 200,
+      status: 'success',
       data: {
         foods: rows,
         total: count,
         page: value.page,
         totalPage: Math.ceil(count / value.pageSize),
       },
-      error: null,
+      message: null,
     });
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({ code: 500, data: null, error: 'server error' });
+    return res.status(500).json({ status: 'error', data: null, message: 'server error' });
   }
 };
 

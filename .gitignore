@@ -1,7 +1,6 @@
 node_modules/
 .vscode/
-.codesandbox/
-.devcontainer/
+test/
 
 yarn.lock
 package-lock.json

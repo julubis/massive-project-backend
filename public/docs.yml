@@ -1,15 +1,29 @@
 openapi: '3.0.2'
 info:
-  title: REST API
+  title: Fitlife RESTful API
+  description: OpenAPI for Fitlife RESTful API
   version: '1.0'
+  contact:
+    name: Julkarnain
+    email: julkarnainlbs29@gmail.com
+  license:
+    name: APACHE 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
   - description: Production
     url: https://prw8fl-5000.csb.app/api
   - description: Development
     url: http://localhost:5000/api
+tags:
+  - name: Auth
+  - name: User
+  - name: Food
+  - name: News
 paths:
   /foods:
     get:
+      tags:
+        - Food
       summary: Get food nutrient per 100 gr
       parameters:
         - in: query
@@ -32,17 +46,136 @@ paths:
             type: string
         - in: query
           name: page
-          description: Limit 
+          description: Page index
           required: false
           schema:
             type: number
         - in: query
           name: pageSize
-          description: Limit query 
+          description: Page size limit
           required: false
           schema:
             type: number
       responses:
         '200':
           description: OK
-
+  /users/info:
+    get:
+      tags:
+        - User
+      summary: Get user information
+      security:
+        - userAuth: []
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login account to get token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Create new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: password
+                gender:
+                  type: string
+                  example: male
+                birthday:
+                  type: number
+                  example: 996278400
+                weight:
+                  type: number
+                  example: 65
+                height:
+                  type: number
+                  example: 173
+                activity_level:
+                  type: number
+                  example: 2
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+  /news:
+    get:
+      tags:
+        - News
+      summary: Get news list
+      parameters:
+        - in: query
+          name: title
+          description: All news with contain title
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    userAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

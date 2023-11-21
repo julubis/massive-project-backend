@@ -14,4 +14,4 @@ function authToken(req, res, next) {
   });
 }
 
-export default authToken;
+module.exports = authToken;
