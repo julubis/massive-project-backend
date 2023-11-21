@@ -46,7 +46,6 @@ const register = async (req, res) => {
     const {
       name, email, password, gender, birthday, weight, height, activity_level,
     } = value;
-    console.log(birthday);
     const { id } = await User.create({ name, email, password });
     await Profile.create({
       id, gender, birthday, weight, height, activity_level,
