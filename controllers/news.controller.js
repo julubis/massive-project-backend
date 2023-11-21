@@ -1,20 +1,22 @@
 const Joi = require('joi');
+const https = require('https');
 const similarity = require('../utils/similarity');
 
 const newsList = [];
 
-const getNewsList = async () => {
-  try {
-    const response = await fetch('https://berita-indo-api-next.vercel.app/api/suara-news/health');
-    const responseJson = await response.json();
-    responseJson?.data.forEach((news) => {
-      newsList.push(news);
+https.get('https://berita-indo-api-next.vercel.app/api/suara-news/health', (res) => {
+  const data = [];
+  res.on('data', (chunk) => {
+    data.push(chunk);
+  });
+  res.on('end', () => {
+    const news = JSON.parse(Buffer.concat(data).toString());
+    news?.data.forEach((n) => {
+      newsList.push(n);
     });
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-  }
-};
+  });
+// eslint-disable-next-line no-console
+}).on('error', (err) => console.error(err));
 
 const getNews = async (req, res) => {
   const schema = Joi.object({
@@ -42,7 +44,5 @@ const getNews = async (req, res) => {
     message: null,
   });
 };
-
-getNewsList();
 
 module.exports = getNews;
