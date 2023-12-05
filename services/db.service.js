@@ -7,10 +7,10 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
   // multipleStatements: true,
-  // ssl: {
-  //   minVersion: 'TLSv1.2',
-  //   rejectUnauthorized: true,
-  // },
+  ssl: {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true,
+  },
 });
 
 const connect = () => new Promise((resolve, reject) => {
