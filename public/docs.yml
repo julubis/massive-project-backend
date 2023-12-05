@@ -16,15 +16,22 @@ servers:
     url: http://localhost:5000/api
 tags:
   - name: Auth
-  - name: User
+  - name: Profile
+  - name: Admin
+  - name: Plan
   - name: Food
+  - name: Recipe
+  - name: Activity
   - name: News
+  - name: Image
 paths:
-  /foods:
+  /plans:
     get:
       tags:
-        - Food
-      summary: Get food nutrient per 100 gr
+        - Plan
+      summary: Get all plans
+      security:
+        - userAuth: []
       parameters:
         - in: query
           name: name
@@ -59,11 +66,458 @@ paths:
       responses:
         '200':
           description: OK
-  /users/info:
+  /plans/{plan_id}:
     get:
       tags:
-        - User
-      summary: Get user information
+        - Plan
+      summary: Get plan detail by id
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /plans/{plan_id}/meals:
+    get:
+      tags:
+        - Plan
+      summary: Get all meals plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Plan
+      summary: add new meal plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /plans/{plan_id}/meals/{meal_id}:
+    put:
+      tags:
+        - Plan
+      summary: edit meal plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Plan
+      summary: detele meal plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /plans/{plan_id}/activities:
+    get:
+      tags:
+        - Plan
+      summary: Get all activity plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Plan
+      summary: add new activity plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /plans/{plan_id}/activities/{activity_id}:
+    put:
+      tags:
+        - Plan
+      summary: edit activity plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Plan
+      summary: detele activity plan
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /plans/{plan_id}/drink:
+    get:
+      tags:
+        - Plan
+      summary: Get drink glass data
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    put:
+      tags:
+        - Plan
+      summary: edit drink glass data
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  
+  /users:
+    get:
+      tags:
+        - Admin
+      summary: Get all users
       security:
         - userAuth: []
       responses:
@@ -73,11 +527,239 @@ paths:
             application/json:
               schema:
                 type: object
-  /auth/login:
+  /users/{recipe_id}:
+    delete:
+      tags:
+        - Admin
+      summary: Delete user by id
+      security:
+        - userAuth: []
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+  
+  /recipes:
+    get:
+      tags:
+        - Recipe
+      summary: Get all recipes
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
     post:
       tags:
-        - Auth
-      summary: Login account to get token
+        - Admin
+      summary: Add new recipe
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /recipes/{recipe_id}:
+    get:
+      tags:
+        - Recipe
+      summary: Get recipe details by id
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  
+    put:
+      tags:
+        - Admin
+      summary: Edit recipe by id
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Admin
+      summary: Delete recipe by id
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  
+  /activities:
+    get:
+      tags:
+        - Activity
+      summary: Get all activities data
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - Admin
+      summary: Add activity data
+      security:
+        - userAuth: []
       requestBody:
         content:
           application/json:
@@ -100,6 +782,445 @@ paths:
             application/json:
               schema:
                 type: object
+  /activities/{activity_id}:
+    put:
+      tags:
+        - Admin
+      summary: Edit activity data
+      security:
+        - userAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      tags:
+        - Admin
+      summary: Delete activity data
+      security:
+        - userAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+  
+  /foods:
+    get:
+      tags:
+        - Food
+      summary: Get all foods nutrient per 100 gr
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Admin
+      summary: Add food data
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  /foods/{food_id}:
+    put:
+      tags:
+        - Admin
+      summary: Edit food data by id
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Admin
+      summary: Delete food data by id
+      security:
+        - userAuth: []
+      parameters:
+        - in: query
+          name: name
+          description: All food with contain name
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: category
+          description: Filter food by category
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: Filter food by type (mentah, olahan)
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      responses:
+        '200':
+          description: OK
+  
+  
+  /profile:
+    get:
+      tags:
+        - Profile
+      summary: Get user information
+      security:
+        - userAuth: []
+      responses:
+        '200':
+          description: Get profile success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john.doe@example.com
+                      photo:
+                        type: string
+                        format: uuid
+                        example: eb04680d-a03d-4c6a-88fc-89d6fa6ac5ae
+                      birthday:
+                        type: string
+                        format: date-time
+                        example: "2001-12-02T00:00:00.000Z"
+                      gender:
+                        type: string
+                        enum:
+                          - male
+                          - female
+                        example: male
+                      weight:
+                        type: number
+                        example: 65
+                      height:
+                        type: number
+                        example: 173
+                      activity_level:
+                        type: number
+                        example: 2
+                      registered_at:
+                        type: string
+                        format: date-time
+                        example: "2023-12-02T00:00:00.000Z"
+                  message:
+                    type: object
+                    example: null
+    post:
+      tags:
+        - Profile
+      summary: Complete user information after register
+      security:
+        - userAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - gender
+                - birthday
+                - weight
+                - height
+                - activity_level
+              properties:
+                gender:
+                  type: string
+                  enum:
+                    - male
+                    - female
+                  example: male
+                birthday:
+                  type: string
+                  example: "2001-12-02T00:00:00.000Z"
+                weight:
+                  type: number
+                  example: 65
+                height:
+                  type: number
+                  example: 173
+                activity_level:
+                  type: number
+                  example: 2
+      responses:
+        '200':
+          description: succes login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      gender:
+                        type: string
+                        example: male
+                      birthday:
+                        type: string
+                        example: "2001-12-02T00:00:00.000Z"
+                      weight:
+                        type: number
+                        example: 65
+                      height:
+                        type: number
+                        example: 173
+                      activity_level:
+                        type: number
+                        example: 2
+                  message:
+                    type: string
+                    example: profile created
+    put:
+      tags:
+        - Profile
+      summary: Edit user information
+      security:
+        - userAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: John Doe
+                gender:
+                  type: string
+                  enum:
+                    - male
+                    - female
+                  default: male
+                birthday:
+                  type: string
+                  format: date-time
+                  default: '2001-12-02T00:00:00.000Z'
+                weight:
+                  type: number
+                  default: 73
+                height:
+                  type: number
+                  default: 180
+                activity_level:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  default: 1
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: success update profile
+          content:
+            application/json:
+              schema:
+                type: object
+  
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login account to get token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  minLength: 8
+                  maxLength: 15
+                  example: password
+      responses:
+        '200':
+          description: Login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data: 
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+                  message:
+                    type: string
+                    example: login success
   /auth/register:
     post:
       tags:
@@ -120,32 +1241,74 @@ paths:
                   example: John Doe
                 email:
                   type: string
+                  format: email
                   example: john.doe@example.com
                 password:
                   type: string
+                  minLength: 8
+                  maxLength: 15
                   example: password
-                gender:
-                  type: string
-                  example: male
-                birthday:
-                  type: number
-                  example: 996278400
-                weight:
-                  type: number
-                  example: 65
-                height:
-                  type: number
-                  example: 173
-                activity_level:
-                  type: number
-                  example: 2
       responses:
         '200':
-          description: succes login
+          description: Register success
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data: 
+                    type: object
+                    example: null
+                  message:
+                    type: string
+                    example: register success
+  
+  /auth/change-password:
+    post:
+      tags:
+        - Auth
+      summary: Change password
+      security:
+        - userAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - old_password
+                - new_password
+              properties:
+                old_password:
+                  type: string
+                  minLength: 8
+                  maxLength: 15
+                  example: oldpassword
+                new_password:
+                  type: string
+                  minLength: 8
+                  maxLength: 15
+                  example: newpassword
+      responses:
+        '200':
+          description: Change password success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data: 
+                    type: object
+                    example: null
+                  message:
+                    type: string
+                    example: change password success
   /news:
     get:
       tags:
@@ -173,6 +1336,23 @@ paths:
       responses:
         '200':
           description: OK
+
+  /images/{image_id}:
+    get:
+      tags:
+        - Image
+      summary: Get image by id
+      parameters:
+        - in: path
+          name: image_id
+          description: Image id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
 components:
   securitySchemes:
     userAuth:

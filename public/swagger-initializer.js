@@ -1,15 +1,15 @@
-window.onload = function() {
+window.onload = function () {
   window.ui = SwaggerUIBundle({
-    url: "./docs.yml",
+    url: './docs.yml',
     dom_id: '#swagger-ui',
     deepLinking: false,
     presets: [
       SwaggerUIBundle.presets.apis,
-      SwaggerUIStandalonePreset
+      SwaggerUIStandalonePreset,
     ],
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl,
     ],
-    layout: "StandaloneLayout"
+    layout: 'StandaloneLayout',
   });
 };
