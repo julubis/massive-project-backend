@@ -24,7 +24,7 @@ const getFoods = async (req, res) => {
       } else {
         q = 'MATCH (name) AGAINST (? IN NATURAL LANGUAGE MODE)';
       }
-      values = values.concat([name]);
+      values = [...values, name];
     }
 
     const [, rows] = await query(`SELECT COUNT(*) AS total FROM food ${q ? `WHERE ${q}` : ''}`, values);
@@ -32,7 +32,7 @@ const getFoods = async (req, res) => {
     const [err, foods] = await query(
       `SELECT id, name, type, category, energy, ROUND(protein, 2) AS protein, ROUND(fat, 2) AS fat, ROUND(carbs, 2) AS carbs 
         FROM food ${q ? `WHERE ${q}` : ''} LIMIT ?, ?`,
-      values.concat([(page - 1) * pageSize, pageSize]),
+      [...values, (page - 1) * pageSize, pageSize],
     );
     if (err) console.log(err);
     return res.json({

@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 const connect = () => new Promise((resolve, reject) => {
-  db.connect((err) => (err ? reject(err) : resolve()));
+  db.getConnection((err) => (err ? reject(err) : resolve()));
 });
 
 const query = (sql, values) => new Promise((resolve) => {
