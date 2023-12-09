@@ -48,4 +48,92 @@ const getFoods = async (req, res) => {
   }
 };
 
-module.exports = { getFoods };
+const addFood = async (req, res) => {
+  try {
+    const schema = Joi.object({
+      name: Joi.string().trim().required(),
+      category: Joi.string().valid('beverage', 'cereal', 'egg', 'fat', 'fruit', 'grain', 'meat', 'milk', 'pastry', 'seafood', 'spice', 'tuber', 'vegetable'),
+      type: Joi.string().valid('raw', 'processed'),
+      energy: Joi.number().integer().min(0).required(),
+      protein: Joi.number().min(0).required(),
+      fat: Joi.number().min(0).required(),
+      carbs: Joi.number().min(0).required(),
+    });
+    const { value, error } = schema.validate(req.body);
+    if (error) return res.status(400).json({ status: 'error', data: null, message: error.message });
+
+    const {
+      name, type, category, energy, protein, fat, carbs,
+    } = value;
+
+    const [err] = await query('INSERT INTO food (name, type, category, energy, protein, fat, carbs) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, type, category, energy, protein, fat, carbs]);
+    if (err?.code === 'ER_DUP_ENTRY') return res.status(400).json({ status: 'error', data: null, error: 'Food already exist' });
+    if (err) throw err;
+
+    return res.json({
+      status: 'success',
+      data: { food: value },
+      message: null,
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ status: 'error', data: null, message: 'server error' });
+  }
+};
+
+const editFood = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!Number.isInteger(+id)) return res.status(400).json({ status: 'error', data: null, message: 'id not a integer' });
+
+    const [, rows] = await query('SELECT id FROM food WHERE id = ? ', [+id]);
+    if (!rows?.length) return res.status(404).json({ status: 'error', data: null, message: 'Food not found' });
+
+    const schema = Joi.object({
+      name: Joi.string().trim().required(),
+      category: Joi.string().valid('beverage', 'cereal', 'egg', 'fat', 'fruit', 'grain', 'meat', 'milk', 'pastry', 'seafood', 'spice', 'tuber', 'vegetable'),
+      type: Joi.string().valid('raw', 'processed'),
+      energy: Joi.number().integer().min(0).required(),
+      protein: Joi.number().min(0).required(),
+      fat: Joi.number().min(0).required(),
+      carbs: Joi.number().min(0).required(),
+    });
+    const { value, error } = schema.validate(req.body);
+    if (error) return res.status(400).json({ status: 'error', data: null, message: error.message });
+
+    const {
+      name, type, category, energy, protein, fat, carbs,
+    } = value;
+
+    const [err] = await query('UPDATE food SET name = ?, type = ?, category = ?, energy = ?, protein = ?, fat = ?, carbs = ? WHERE id = ?', [name, type, category, energy, protein, fat, carbs, +id]);
+    if (err) throw err;
+
+    return res.json({
+      status: 'success',
+      data: { food: value },
+      message: null,
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ status: 'error', data: null, message: 'server error' });
+  }
+};
+
+const deleteFood = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!Number.isInteger(+id)) return res.status(400).json({ status: 'error', data: null, message: 'id not a integer' });
+
+    const [, rows] = await query('DELETE FROM food WHERE id = ? ', [+id]);
+    if (!rows?.affectedRows) return res.status(404).json({ status: 'error', data: null, message: 'Food not found' });
+
+    return res.json({ status: 'success', data: null, message: null });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ status: 'error', data: null, message: 'server error' });
+  }
+};
+
+module.exports = {
+  getFoods, addFood, editFood, deleteFood,
+};

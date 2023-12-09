@@ -892,37 +892,52 @@ paths:
       summary: Add food data
       security:
         - userAuth: []
-      parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - category
+                - type
+                - energy
+                - protein
+                - fat
+                - carbs
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                  enum:
+                    - 'beverage' 
+                    - 'cereal'
+                    - 'egg' 
+                    - 'fat'
+                    - 'fruit'
+                    - 'grain'
+                    - 'meat'
+                    - 'milk'
+                    - 'pastry'
+                    - 'seafood'
+                    - 'spice'
+                    - 'tuber'
+                    - 'vegetable'
+                type:
+                  type: string
+                  enum:
+                   - processed
+                   - raw
+                energy:
+                  type: integer
+                protein:
+                  type: number
+                fat:
+                  type: number
+                carbs:
+                  type: number
+      
       responses:
         '200':
           description: OK
@@ -934,36 +949,58 @@ paths:
       security:
         - userAuth: []
       parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
+        - in: path
+          name: food_id
+          description: Food id
+          required: true
           schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - category
+                - type
+                - energy
+                - protein
+                - fat
+                - carbs
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                  enum:
+                    - 'beverage' 
+                    - 'cereal'
+                    - 'egg' 
+                    - 'fat'
+                    - 'fruit'
+                    - 'grain'
+                    - 'meat'
+                    - 'milk'
+                    - 'pastry'
+                    - 'seafood'
+                    - 'spice'
+                    - 'tuber'
+                    - 'vegetable'
+                type:
+                  type: string
+                  enum:
+                   - processed
+                   - raw
+                energy:
+                  type: integer
+                protein:
+                  type: number
+                fat:
+                  type: number
+                carbs:
+                  type: number
+      
       responses:
         '200':
           description: OK
@@ -974,36 +1011,12 @@ paths:
       security:
         - userAuth: []
       parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
+        - in: path
+          name: food_id
+          description: Food id
+          required: true
           schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: OK
