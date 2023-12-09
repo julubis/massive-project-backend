@@ -1,7 +1,10 @@
-const connection = require('./db.service');
+const { query } = require('./db.service');
 
-async function getUserProfile(id) {
-  const db = await connection;
-  const [rows, fields] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
-  return rows.length ? rows[0] : null;
-}
+const getUserByEmail = async (email) => {
+  const [err, rows] = await query(
+    'SELECT id, name, email, role, password FROM user WHERE email = ?',
+    [email],
+  );
+  if (!rows?.length) return null;
+  return rows[0];
+};

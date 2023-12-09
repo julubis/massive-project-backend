@@ -53,7 +53,7 @@ const register = async (req, res) => {
       [name, email, hashPassword, 'user'],
     );
     if (err?.code === 'ER_DUP_ENTRY') return res.status(400).json({ status: 'error', data: null, error: 'email already registered' });
-    if (err) return res.status(400).json({ status: 'error', data: null, error: 'register failed' });
+    if (err) throw err;
 
     return res.json({ status: 'success', data: null, message: 'register success' });
   } catch (e) {

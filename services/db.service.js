@@ -6,11 +6,11 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
-  // multipleStatements: true,
-  ssl: {
+  multipleStatements: true,
+  ssl: process.env.SSL ? {
     minVersion: 'TLSv1.2',
     rejectUnauthorized: true,
-  },
+  } : null,
 });
 
 const connect = () => new Promise((resolve, reject) => {
@@ -42,5 +42,5 @@ const update = (obj) => {
 };
 
 module.exports = {
-  connect, query, where, update,
+  connect, where, update, query,
 };

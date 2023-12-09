@@ -527,13 +527,20 @@ paths:
             application/json:
               schema:
                 type: object
-  /users/{recipe_id}:
+  /users/{user_id}:
     delete:
       tags:
         - Admin
       summary: Delete user by id
       security:
         - userAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          description: User id
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: succes login
@@ -550,22 +557,27 @@ paths:
       parameters:
         - in: query
           name: name
-          description: All food with contain name
+          description: Search recipe by keyword
           required: false
           schema:
             type: string
         - in: query
           name: category
-          description: Filter food by category
+          description: Filter recipe by category
           required: false
           schema:
             type: string
+            enum:
+              - breakfast
+              - lunch
+              - dinner
+              - snack
         - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
+          name: recomended
+          description: Get recomended recipe (must login)
           required: false
           schema:
-            type: string
+            type: boolean
         - in: query
           name: page
           description: Page index
@@ -587,37 +599,55 @@ paths:
       summary: Add new recipe
       security:
         - userAuth: []
-      parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - photo
+                - category
+                - description
+                - duration
+                - serving
+                - energy
+                - protein
+                - fat
+                - carbs
+                - ingredients
+                - directions
+              properties:
+                name:
+                  type: string
+                  default: Food Name
+                photo:
+                  type: string
+                  format: binary
+                category:
+                  type: string
+                description:
+                  type: string
+                  maxLength: 255
+                duration:
+                  type: integer
+                serving:
+                  type: integer
+                energy:
+                  type: integer
+                protein:
+                  type: number
+                fat:
+                  type: number
+                carbs: 
+                  type: number
+                ingredients:
+                  type: string
+                  default: [{"name": "sauce", "unit": "2 tsp"}]
+                directions:
+                  type: string
+                  default: [{"detail": "Mix the dry ingredients together."}]
+      
       responses:
         '200':
           description: OK
@@ -627,36 +657,13 @@ paths:
         - Recipe
       summary: Get recipe details by id
       parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
+        - in: path
+          name: recipe_id
+          description: Recipe id
+          required: true
           schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+            type: integer
+       
       responses:
         '200':
           description: OK
@@ -668,36 +675,60 @@ paths:
       security:
         - userAuth: []
       parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
+        - in: path
+          name: recipe_id
+          description: Recipe id
+          required: true
           schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - category
+                - description
+                - duration
+                - serving
+                - energy
+                - protein
+                - fat
+                - carbs
+                - ingredients
+                - directions
+              properties:
+                name:
+                  type: string
+                  default: Food Name
+                photo:
+                  type: string
+                  format: binary
+                category:
+                  type: string
+                description:
+                  type: string
+                  maxLength: 255
+                duration:
+                  type: integer
+                serving:
+                  type: integer
+                energy:
+                  type: integer
+                protein:
+                  type: number
+                fat:
+                  type: number
+                carbs: 
+                  type: number
+                ingredients:
+                  type: string
+                  default: [{"name": "sauce", "unit": "2 tsp"}]
+                directions:
+                  type: string
+                  default: [{"detail": "Mix the dry ingredients together."}]
+      
       responses:
         '200':
           description: OK
@@ -708,36 +739,12 @@ paths:
       security:
         - userAuth: []
       parameters:
-        - in: query
-          name: name
-          description: All food with contain name
-          required: false
+        - in: path
+          name: recipe_id
+          description: Recipe id
+          required: true
           schema:
-            type: string
-        - in: query
-          name: category
-          description: Filter food by category
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: type
-          description: Filter food by type (mentah, olahan)
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: Page index
-          required: false
-          schema:
-            type: number
-        - in: query
-          name: pageSize
-          description: Page size limit
-          required: false
-          schema:
-            type: number
+            type: integer
       responses:
         '200':
           description: OK
@@ -1317,7 +1324,7 @@ paths:
       parameters:
         - in: query
           name: title
-          description: All news with contain title
+          description: Search news by keyword
           required: false
           schema:
             type: string
@@ -1336,7 +1343,7 @@ paths:
       responses:
         '200':
           description: OK
-
+  
   /images/{image_id}:
     get:
       tags:
@@ -1354,6 +1361,14 @@ paths:
           description: OK
 
 components:
+  # schemas:
+    # RecipeIngredient:
+      # type: object
+      # properties:
+      #   name:
+      #     type: string
+      #   unit: 
+      #     type: string
   securitySchemes:
     userAuth:
       type: http

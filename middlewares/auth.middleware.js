@@ -14,4 +14,9 @@ function authToken(req, res, next) {
   });
 }
 
-module.exports = authToken;
+function adminRoute(req, res, next) {
+  if (req.user?.role !== 'admin') return res.status(401).json({ status: 'error', data: null, message: 'unauthorized' });
+  next();
+}
+
+module.exports = { authToken, adminRoute };

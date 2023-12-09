@@ -30,11 +30,11 @@ const getFoods = async (req, res) => {
     const [, rows] = await query(`SELECT COUNT(*) AS total FROM food ${q ? `WHERE ${q}` : ''}`, values);
     const { total } = rows[0];
     const [err, foods] = await query(
-      `SELECT id, name, type, category, energy, ROUND(protein, 2) AS protein, ROUND(fat, 2) AS fat, ROUND(carbs, 2) AS carbs 
-        FROM food ${q ? `WHERE ${q}` : ''} LIMIT ?, ?`,
-      [...values, (page - 1) * pageSize, pageSize],
+      `SELECT food.id, food.name, food.type, food.category AS category_id, food_category.name AS category, food.energy, ROUND(food.protein, 2) AS protein, ROUND(food.fat, 2) AS fat, ROUND(food.carbs, 2) AS carbs FROM food LEFT JOIN food_category ON (food.category = food_category.id) ${q ? `WHERE ${q}` : ''} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`,
+      values,
     );
     if (err) console.log(err);
+
     return res.json({
       status: 'success',
       data: {
@@ -48,4 +48,4 @@ const getFoods = async (req, res) => {
   }
 };
 
-module.exports = getFoods;
+module.exports = { getFoods };
