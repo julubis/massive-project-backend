@@ -626,6 +626,11 @@ paths:
                   format: binary
                 category:
                   type: string
+                  enum:
+                    - breakfast
+                    - lunch
+                    - dinner
+                    - snack
                 description:
                   type: string
                   maxLength: 255
@@ -707,6 +712,11 @@ paths:
                   format: binary
                 category:
                   type: string
+                  enum:
+                    - breakfast
+                    - lunch
+                    - dinner
+                    - snack
                 description:
                   type: string
                   maxLength: 255
@@ -754,6 +764,26 @@ paths:
       tags:
         - Activity
       summary: Get all activities data
+      parameters:
+        - in: query
+          name: name
+          description: Seacrh activities
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Page index
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: pageSize
+          description: Page size limit
+          required: false
+          schema:
+            type: number
+      
       responses:
         '200':
           description: succes login
@@ -773,15 +803,15 @@ paths:
             schema:
               type: object
               required:
-                - email
-                - password
+                - name
+                - met
               properties:
-                email:
+                name:
                   type: string
-                  example: john.doe@example.com
-                password:
-                  type: string
-                  example: password
+                  example: Berlari
+                met:
+                  type: number
+                  example: 7
       responses:
         '200':
           description: succes login
@@ -796,21 +826,28 @@ paths:
       summary: Edit activity data
       security:
         - userAuth: []
+      parameters:
+        - in: path
+          required: true
+          name: activity_id
+          schema:
+            type: number
+      
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - email
-                - password
+                - name
+                - met
               properties:
-                email:
+                name:
                   type: string
-                  example: john.doe@example.com
-                password:
-                  type: string
-                  example: password
+                  example: Berlari
+                met:
+                  type: number
+                  example: 7
       responses:
         '200':
           description: succes login
@@ -824,21 +861,12 @@ paths:
       summary: Delete activity data
       security:
         - userAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  example: john.doe@example.com
-                password:
-                  type: string
-                  example: password
+      parameters:
+        - in: path
+          required: true
+          name: activity_id
+          schema:
+            type: number
       responses:
         '200':
           description: succes login
@@ -865,12 +893,30 @@ paths:
           required: false
           schema:
             type: string
+            enum:
+              - 'beverage' 
+              - 'cereal'
+              - 'egg' 
+              - 'fat'
+              - 'fruit'
+              - 'grain'
+              - 'meat'
+              - 'milk'
+              - 'pastry'
+              - 'seafood'
+              - 'spice'
+              - 'tuber'
+              - 'vegetable'
+          
         - in: query
           name: type
-          description: Filter food by type (mentah, olahan)
+          description: Filter food by type
           required: false
           schema:
             type: string
+            enum:
+              - processed
+              - raw
         - in: query
           name: page
           description: Page index

@@ -24,16 +24,16 @@ const getAllRecipe = async (req, res) => {
     let [q, values] = where({ category });
     if (name) {
       if (q) {
-        q += ' AND MATCH (name, description) AGAINST (? WITH QUERY EXPANSION)';
+        q += 'AND LOWER(name) LIKE LOWER(CONCAT(\'%\', ?, \'%\'))';
       } else {
-        q = 'MATCH (name, description) AGAINST (? WITH QUERY EXPANSION)';
+        q = 'LOWER(name) LIKE LOWER(CONCAT(\'%\', ?, \'%\'))';
       }
       values = [...values, name];
     }
     const [, rows] = await query(`SELECT COUNT(*) AS total FROM recipe ${q ? `WHERE ${q}` : ''}`, values);
     const { total } = rows[0];
 
-    const [, recipes] = await query(`SELECT id, name, category, energy, duration FROM recipe ${q ? `WHERE ${q}` : ''} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`, values);
+    const [, recipes] = await query(`SELECT id, name, photo, category, energy, duration FROM recipe ${q ? `WHERE ${q}` : ''} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`, values);
     return res.json({
       status: 'success',
       data: {
@@ -52,7 +52,7 @@ const getRecipeDetail = async (req, res) => {
     const { id } = req.params;
     if (!Number.isInteger(+id)) return res.status(400).json({ status: 'error', data: null, message: 'id not a integer' });
 
-    const [, rows] = await query('SELECT id, name, category, description, duration, serving, energy, ROUND(protein, 2) AS protein, ROUND(fat, 2) AS fat, ROUND(carbs) AS carbs FROM recipe WHERE id = ? ', [id]);
+    const [, rows] = await query('SELECT id, name, photo, category, description, duration, serving, energy, ROUND(protein, 2) AS protein, ROUND(fat, 2) AS fat, ROUND(carbs) AS carbs FROM recipe WHERE id = ? ', [id]);
     if (!rows?.length) return res.status(404).json({ status: 'error', data: null, message: 'recipe not found' });
     const recipe = rows[0];
 

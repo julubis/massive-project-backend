@@ -19,14 +19,14 @@ const getAllActivity = async (req, res) => {
     let values = [];
 
     if (name) {
-      q = 'MATCH (name) AGAINST (? IN NATURAL LANGUAGE MODE)';
+      q = 'LOWER(name) LIKE LOWER(CONCAT(\'%\', ?, \'%\'))';
       values = [name];
     }
 
     const [, rows] = await query(`SELECT COUNT(*) AS total FROM activity ${q ? `WHERE ${q}` : ''}`, values);
     const { total } = rows[0];
     const [err, activities] = await query(
-      `SELECT * FROM activity ${q ? `WHERE ${q}` : ''} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`,
+      `SELECT id, name, ROUND(met, 2) AS met FROM activity ${q ? `WHERE ${q}` : ''} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`,
       values,
     );
     if (err) console.log(err);
@@ -123,5 +123,3 @@ const deleteActivity = async (req, res) => {
 module.exports = {
   getAllActivity, addActivity, editActivity, deleteActivity,
 };
-
-module.exports = { getAllActivity };
