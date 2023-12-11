@@ -48,4 +48,17 @@ const calorieToBurn = ({
   return Math.round(total);
 };
 
-module.exports = { calorieToBurn, calorieToConsume };
+const drinkTarget = ({ weight }) => {
+  if (weight <= 50) return 2000;
+  if (weight <= 55) return 2250;
+  if (weight <= 60) return 2500;
+  if (weight <= 65) return 2750;
+  if (weight <= 70) return 3000;
+  if (weight <= 75) return 3250;
+  if (weight <= 80) return 3500;
+  if (weight <= 85) return 3750;
+  if (weight <= 90) return 4000;
+  return 4250;
+};
+
+module.exports = { calorieToBurn, calorieToConsume, drinkTarget };

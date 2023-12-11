@@ -7,6 +7,7 @@ const image = require('./image.route');
 const food = require('./food.route');
 const recipe = require('./recipe.route');
 const activity = require('./activity.route');
+const plan = require('./plan.route');
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.use('/auth', auth);
 router.use('/profile', profile);
 router.use('/users', user);
 router.use('/foods', food);
+router.use('/plan', plan);
 router.use('/activities', activity);
 router.use('/recipes', recipe);
 router.use('/news', news);
