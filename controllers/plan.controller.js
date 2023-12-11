@@ -86,8 +86,8 @@ const getPlan = async (req, res) => {
       JOIN activity_plan ON (activity_plan.plan_id = plan.id)
       JOIN activity ON (activity.id = activity_plan.activity_id)
       JOIN profile ON (profile.user_id = plan.user_id)
-      WHERE plan.date = '2023-12-11' AND plan.user_id = 10
-    `);
+      WHERE plan.date = ? AND plan.user_id = ?
+    `, [value.date, userId]);
     burned = burned?.length ? +burned[0].total : 0;
 
     let [, activities] = await query(`
