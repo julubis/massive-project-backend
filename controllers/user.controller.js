@@ -3,7 +3,7 @@ const { query } = require('../services/db.service');
 const getAllUser = async (req, res) => {
   try {
     const [, rows] = await query('SELECT * FROM user WHERE role = \'user\'');
-    if (!rows?.length) return res.status(404).json({ status: 'error', data: null, message: 'user not found' });
+    if (!rows?.affectedRows) return res.status(404).json({ status: 'error', data: null, message: 'user not found' });
     return res.json({ status: 'success', data: rows, message: null });
   } catch (e) {
     console.error(e);
