@@ -6,6 +6,7 @@ const { query, update } = require('../services/db.service');
 const getProfile = async (req, res) => {
   try {
     const { id, role } = req.user;
+    
     let sql = 'SELECT user.id, user.name, user.email, profile.birthday, user.photo, TIMESTAMPDIFF(YEAR, profile.birthday, CURDATE()) AS age, profile.gender, profile.weight, profile.height, profile.activity_level, user.registered_at FROM user JOIN profile ON (profile.user_id = user.id) WHERE user.id = ?';
     if (role === 'admin') sql = 'SELECT id, name, email, photo, registered_at FROM user WHERE id = ?';
     const [, rows] = await query(sql, [id]);
